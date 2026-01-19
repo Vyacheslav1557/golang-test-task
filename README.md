@@ -1,26 +1,51 @@
-Написать микросервис на Go с REST эндпоинтом, принимающем на вход одно число
-Число должно сохраняться в БД
-В ответ должен возвращаться список отсортированных чисел
+# Go Number Service
 
-Цель тестового понять что умеешь программировать: реализация + тесты. Сильно накручивать реализацию не нужно. Вас оценивают за скорость, и насколько быстро можете учиться. Мне не важно что вы умели до, мне важно как быстро вы учитесь и насколько сильно воркаете :)
+A Go microservice with REST API for working with numbers. Accepts a number, stores it in PostgreSQL, and returns a sorted list of all numbers.
 
-Пример:
-1. Отправили число 3
-=> Записали в бд
-=> Вернули в ответе массив [3]
-2. Отправили число 2
-=> Записали в БД
-=> Вернули в ответ массив [2, 3]
-3. Отправили число 1
-=> Записали в БД
-=> Вернули в ответ массив [1,2,3]
+## 🚀 Quick Start
 
-Возвращать ответ можно как угодно (жсоном, массивом), главное чтобы сортировалось и возвращалось
+### Requirements
 
-Микросервис закинуть в Docker образ, все должно запускаться по одной кнопке. Решение отправить ссылкой на репу
+- [Docker](https://www.docker.com/get-started) and Docker Compose
+- [Go 1.24+](https://go.dev/dl/) (for local development)
 
-Пользоваться можно чем угодно: Cursor, ChatGPT, главное чтобы было сделано) Если все ок, то дальше мит со мной и подключаю на проект
+### Running with Docker Compose
 
-Репозиторий склонить, меня добавить в ревьюера на мрку
 
-Стек: Go, PostgreSQL, Docker
+```bash
+docker-compose up --build
+```
+
+The service will be available at: `http://localhost:8080`
+
+## 🧪 Testing
+
+### Running Integration Tests
+
+The project uses [testcontainers-go](https://golang.testcontainers.org/) to automatically spin up PostgreSQL in a Docker container.
+
+**Requirements:**
+- Docker must be running
+- Docker Desktop (for Windows/Mac) or Docker Engine (for Linux)
+
+```bash
+# Run all tests
+go test ./tests/... -v
+
+# With coverage output
+go test ./tests/... -v -cover
+```
+
+## 🔧 Code Generation
+
+The project uses code generation tools:
+
+[sqlc](https://github.com/sqlc-dev/sqlc) for generating code from SQL files.
+[oapi-codegen](https://github.com/oapi-codegen/oapi-codegen) for generating code from OpenAPI specification.
+[goose](https://github.com/pressly/goose) for running migrations.
+
+To generate code, use the following command:
+
+```bash
+go generate ./...
+```

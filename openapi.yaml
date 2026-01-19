@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: NumberService API
+  version: 0.0.1
+paths:
+  /numbers:
+    post:
+      operationId: AddNumber
+      description: Add a number to the list
+      parameters:
+        - name: number
+          in: query
+          description: The number to add
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: The number was added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateNumberResponse'
+        400:
+          description: Invalid number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Numbers:
+      type: array
+      items:
+        type: integer
+    CreateNumberResponse:
+      type: object
+      required:
+      properties:
+        numbers:
+          $ref: '#/components/schemas/Numbers'
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
